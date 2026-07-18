@@ -1,155 +1,253 @@
-# SYJ Nexus Engine
+<div align="center">
 
-**A headless, API-first, configuration-driven enterprise operating framework.**
-**Bring Your Own Vertical (BYOV): add a new industry by editing a config file — never the backend code.**
+<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=28&duration=2800&pause=1000&color=5B8CFF&center=true&vCenter=true&width=760&lines=SYJ+NEXUS+ENGINE;HEADLESS+%C2%B7+API-FIRST+%C2%B7+CONFIG-DRIVEN;BRING+YOUR+OWN+VERTICAL+(BYOV);13+INDUSTRIES.+ONE+ENGINE.+ZERO+CODE+CHANGES." alt="SYJ Nexus Engine" />
 
-Built by **SAYANJALI NEXUS PRIVATE LIMITED**.
-Repository: https://github.com/SHalimoosavi/SYJ-Nexus-Engine
+<br/>
 
----
+[![Node](https://img.shields.io/badge/node-%E2%89%A518.18.0-5B8CFF?style=for-the-badge&logo=node.js&logoColor=white&labelColor=0b0d12)](#-installation)
+[![Next.js](https://img.shields.io/badge/next.js-14-000000?style=for-the-badge&logo=next.js&logoColor=white&labelColor=0b0d12)](#-technology-stack)
+[![TypeScript](https://img.shields.io/badge/typescript-strict-3178C6?style=for-the-badge&logo=typescript&logoColor=white&labelColor=0b0d12)](#-technology-stack)
+[![SQLite](https://img.shields.io/badge/sqlite-drizzle_orm-44A833?style=for-the-badge&logo=sqlite&logoColor=white&labelColor=0b0d12)](#-database)
+[![License](https://img.shields.io/badge/license-MIT-8a90a2?style=for-the-badge&labelColor=0b0d12)](#-license)
 
-## Table of Contents
+<sub>Built by <b>SAYANJALI NEXUS PRIVATE LIMITED</b> · <a href="https://github.com/SHalimoosavi/SYJ-Nexus-Engine">github.com/SHalimoosavi/SYJ-Nexus-Engine</a></sub>
 
-1. [Overview](#overview)
-2. [Architecture](#architecture)
-3. [Folder Structure](#folder-structure)
-4. [Technology Stack](#technology-stack)
-5. [Installation](#installation)
-6. [Initialization](#initialization)
-7. [Development](#development)
-8. [Production Deployment](#production-deployment)
-9. [Database](#database)
-10. [Configuration](#configuration)
-11. [Vertical Registry (BYOV)](#vertical-registry-byov)
-12. [API Documentation](#api-documentation)
-13. [Security Model](#security-model)
-14. [Testing](#testing)
-15. [License](#license)
-16. [Contributing](#contributing)
-17. [Troubleshooting](#troubleshooting)
-18. [FAQ](#faq)
+</div>
 
----
-
-## Overview
-
-SYJ Nexus Engine is a single, unopinionated operational backbone that can run a lead pipeline,
-a compliance log, a transaction ledger, and an audit trail for **any** industry — agriculture,
-manufacturing, logistics, retail, healthcare, education, hospitality, construction, finance,
-government, real estate, SaaS, consulting, or one you invent — without touching a single line
-of backend code. The industry-specific parts (stages, compliance types, permissions, display
-names) live entirely in `registry/vertical-registry.json`.
-
-Everything else — auth, RBAC, the unified operational data layer, the REST API, the audit
-trail — is shared, vertical-agnostic infrastructure.
-
-## Architecture
+<br/>
 
 ```
-Client / Dashboard / AI Agent
-            │
-            ▼
-     Next.js Route Handlers  (app/api/**)
-            │
-    ┌───────┼────────────────────┐
-    ▼       ▼                    ▼
- core/auth  core/authz     core/operational
- (session,  (RBAC,          (unified data layer:
-  password,  rate limit)     leads, compliance,
-  csrf)                      transactions, activity)
-    │                              │
-    └──────────────┬───────────────┘
-                    ▼
-              db/ (Drizzle ORM)
-                    │
-                    ▼
-           SQLite (better-sqlite3)
-
-registry/vertical-registry.json ──► drives menus, permissions,
-                                     API validation, module loading
+$ whoami
+> A single operational backbone that runs a lead pipeline, a compliance log,
+> a transaction ledger, and an audit trail — for ANY industry — without
+> touching backend code. The industry-specific parts live in one JSON file.
 ```
 
-Every domain module (leads, compliance, transactions) is a thin layer on top of the same
-**Unified Operational Data Layer** (`core/operational/dataLayer.ts`). Reads and writes go
-through one consistent interface, and every mutation automatically records a row in the
-`activities` table — so the timeline is never out of sync with the data.
+<br/>
 
-## Folder Structure
+## 📖 Table of Contents
 
 ```
-app/
-  api/                REST endpoints (Next.js Route Handlers)
-    auth/              login, logout, session
-    organizations/     register (bootstrap), [id]
-    users/             list/create, [id]
-    verticals/         registry-driven vertical list
-    leads/             unified operational layer — leads
-    compliance/        unified operational layer — compliance logs
-    transactions/      unified operational layer — transactions
-    activity/          org-wide feed + per-entity timeline
-    search/            global search across the operational layer
-    settings/          key/value config manager + api-keys
-    system/            status snapshot + audit log read
-    health/            public liveness/readiness probe
-  layout.tsx / page.tsx / globals.css   minimal status dashboard UI
-core/
-  auth/                password hashing, sessions, CSRF, request guard
-  authz/               RBAC resolution, rate limiting
-  logging/             structured logger + durable audit trail writer
-  errors/              typed AppError hierarchy + response envelope
-  validation/          Zod schemas (auth + domain)
-  operational/         the Unified Operational Data Layer
-db/
-  schema.ts            Drizzle schema — every table
-  client.ts            SQLite connection (WAL mode, FK enforcement on)
-  migrations/          generated by drizzle-kit (created on first init)
-registry/
-  vertical-registry.json   the BYOV config file — edit this to add industries
-  schema.ts / loader.ts    validation + cached loader for the registry
-lib/                   small shared utilities (ID generation)
-components/            UI primitives (extend as the dashboard grows)
-scripts/               migrate.ts, seed.ts, init.ts, health-check.ts
-tests/                 Vitest suite (registry, core, db, api)
-public/                static assets
-docs/                  this documentation lives here too, for convenience
-init.sh                one-shot installer/initializer
+01. Overview                    10. Configuration
+02. Architecture                11. Vertical Registry (BYOV)
+03. Folder Structure            12. API Documentation
+04. Technology Stack            13. Security Model
+05. ⚠️  Termux Compatibility     14. Testing
+06. Installation                15. License
+07. Initialization              16. Contributing
+08. Development                 17. Troubleshooting
+09. Production Deployment       18. FAQ
 ```
 
-## Technology Stack
+<br/>
 
-| Layer          | Choice                                   |
-|----------------|-------------------------------------------|
-| Frontend       | Next.js 14 (App Router) + TypeScript + React |
-| Backend        | Next.js Route Handlers (no separate server) |
-| Database       | Drizzle ORM + better-sqlite3 (SQLite)     |
-| Styling        | Tailwind CSS                              |
-| Validation     | Zod                                       |
-| Password hash  | Node built-in `crypto.scrypt` (no native addon) |
-| Testing        | Vitest                                    |
+## 01 · Overview
 
-**Explicitly not used:** Prisma, MongoDB, Firebase, Supabase, Electron, Docker-as-a-requirement,
-or any heavy enterprise framework. The whole stack runs with `node` + `npm` and nothing else —
-by design, so it runs anywhere, including constrained environments like Termux on Android.
+> SYJ Nexus Engine is a **headless**, **API-first**, **configuration-driven** enterprise
+> operating framework. Agriculture, manufacturing, logistics, retail, healthcare, education,
+> hospitality, construction, finance, government, real estate, SaaS, consulting — or one you
+> invent — all run on the same backend. **Bring Your Own Vertical (BYOV)** means adding an
+> industry is a JSON diff, not a pull request against `core/`.
 
-## Installation
+<br/>
 
-Requirements: **Node.js ≥ 18.18.0** and **npm**.
+## 02 · Architecture
+
+```
+┌──────────────────────────────────────────────────────────────────────────┐
+│                     CLIENT · DASHBOARD · AI AGENT · CLI                  │
+└───────────────────────────────┬────────────────────────────────────────┬─┘
+                                 │  HTTP / JSON                          │
+                                 ▼                                        │
+┌──────────────────────────────────────────────────────────────────────┐ │
+│                Next.js Route Handlers  ·  app/api/**                 │ │
+│   /auth  /users  /organizations  /verticals  /leads  /compliance     │ │
+│   /transactions  /activity  /search  /settings  /system  /health     │◄┘
+└───────────────────────────────┬────────────────────────────────────────┘
+                                 ▼
+        ┌────────────────────────────────────────────────────┐
+        │                    core/  (guard.ts)                │
+        │   rate-limit → session auth → CSRF → RBAC permission │
+        └───────┬───────────────┬───────────────┬─────────────┘
+                 ▼               ▼               ▼
+        ┌───────────────┐ ┌─────────────┐ ┌──────────────────────┐
+        │  core/auth     │ │ core/authz  │ │  core/operational     │
+        │  session        │ │  rbac       │ │  UNIFIED DATA LAYER    │
+        │  password       │ │  rateLimit  │ │  leads · compliance    │
+        │  csrf           │ │             │ │  transactions          │
+        └───────┬───────┘ └──────┬──────┘ │  ──► auto-writes        │
+                 │                │        │      activities/timeline│
+                 └────────┬───────┘        └───────────┬────────────┘
+                          ▼                             ▼
+                 ┌──────────────────────────────────────────────┐
+                 │            db/schema.ts · Drizzle ORM          │
+                 │  organizations · users · roles · permissions   │
+                 │  sessions · leads · compliance_logs             │
+                 │  transactions · activities · attachments        │
+                 │  settings · api_keys · audit_logs               │
+                 └───────────────────┬────────────────────────────┘
+                                     ▼
+                        ┌────────────────────────┐
+                        │  SQLite (better-sqlite3) │
+                        │  WAL mode · FK enforced   │
+                        └────────────────────────┘
+
+        ▲
+        │  drives menus, permissions, API validation, module loading
+        │
+┌───────┴────────────────────────────────────────────────────────────┐
+│         registry/vertical-registry.json   ← THE BYOV FILE           │
+│   { id, name, leadStages[], complianceTypes[], permissions[] }      │
+│   13 verticals shipped. Add one. Zero backend code touched.         │
+└───────────────────────────────────────────────────────────────────┘
+```
+
+Every domain module — leads, compliance logs, transactions — is a thin layer over the same
+**Unified Operational Data Layer**. One consistent interface for list / get / create / update,
+and every mutation automatically appends to `activities`, so the timeline is never out of sync.
+
+<br/>
+
+## 03 · Folder Structure
 
 ```bash
-git clone https://github.com/SHalimoosavi/SYJ-Nexus-Engine.git
-cd SYJ-Nexus-Engine
-chmod +x init.sh
-./init.sh
+syj-nexus-engine/
+├── app/
+│   ├── api/                  # 22 route handlers — the entire backend surface
+│   │   ├── auth/             #   login · logout · session
+│   │   ├── organizations/    #   register (bootstrap) · [id]
+│   │   ├── users/            #   list/create · [id]
+│   │   ├── verticals/        #   registry-driven vertical list
+│   │   ├── leads/            #   unified operational layer
+│   │   ├── compliance/       #   unified operational layer
+│   │   ├── transactions/     #   unified operational layer
+│   │   ├── activity/         #   org feed + per-entity timeline
+│   │   ├── search/           #   global search
+│   │   ├── settings/         #   config manager + api-keys
+│   │   ├── system/           #   status snapshot + audit read
+│   │   └── health/           #   public liveness probe
+│   └── layout.tsx / page.tsx / globals.css
+├── core/
+│   ├── auth/                 # password · session · csrf · guard
+│   ├── authz/                # rbac · rate limiting
+│   ├── logging/               # structured logger + durable audit writer
+│   ├── errors/                 # typed AppError hierarchy + response envelope
+│   ├── validation/            # Zod schemas
+│   └── operational/           # ★ the Unified Operational Data Layer
+├── db/
+│   ├── schema.ts               # every table, one file
+│   ├── client.ts               # the ONLY file that imports better-sqlite3
+│   └── migrations/             # generated by drizzle-kit
+├── registry/
+│   ├── vertical-registry.json  # ★ edit THIS to add an industry
+│   └── schema.ts / loader.ts   # validation + cached loader
+├── modules/                    # optional extension layer (event bus, etc.)
+├── hooks/  · components/       # client-side API hook + UI primitives
+├── scripts/                    # migrate · seed · init · health-check
+├── tests/                       # Vitest — registry, core, db, api
+├── docs/ARCHITECTURE.md         # deep-dive design rationale
+└── init.sh                      # one-shot installer
 ```
 
-`init.sh` is idempotent — it verifies Node/npm, installs dependencies, creates `.env` with
-freshly generated secrets if one doesn't exist, initializes the SQLite database, runs
-migrations, seeds baseline data (a default organization + admin user + a few sample records),
-and verifies the install with a health check.
+<br/>
 
-## Initialization
+## 04 · Technology Stack
 
-Under the hood, `init.sh` calls into these npm scripts (each is also runnable on its own):
+| Layer | Choice | Why |
+|---|---|---|
+| Frontend | Next.js 14 (App Router) · TypeScript · React | one runtime, server components |
+| Backend | Next.js Route Handlers | no separate Express server |
+| Database | Drizzle ORM + better-sqlite3 | zero external services |
+| Styling | Tailwind CSS | no UI framework overhead |
+| Validation | Zod | typed, composable, runtime-safe |
+| Password hashing | Node built-in `crypto.scrypt` | **no native addon** — see §05 |
+| Testing | Vitest | fast, ESM-native |
+
+**Explicitly excluded:** Prisma, MongoDB, Firebase, Supabase, Electron, Docker-as-a-requirement,
+heavy enterprise frameworks. `node` + `npm` is the whole runtime dependency.
+
+<br/>
+
+## 05 · ⚠️ Termux Compatibility Notice
+
+Nexus Engine is designed primarily for standard Linux, macOS, and Windows development
+environments. While much of the codebase is compatible with Android Termux, some native
+Node.js dependencies may not compile successfully due to Termux's limited native build
+environment.
+
+### Current Limitation
+
+The current version uses `better-sqlite3` as the database driver. This package requires
+native compilation via `node-gyp`, and prebuilt binaries are not available for Android/Termux.
+As a result, `npm install` may fail with errors related to native compilation or Android NDK
+configuration.
+
+> This is an environmental limitation rather than an issue with the Nexus Engine source code.
+
+### Recommended Development Environments
+
+- ✅ Ubuntu / Debian
+- ✅ Fedora / RHEL
+- ✅ Arch Linux
+- ✅ macOS
+- ✅ Windows (WSL2 or native Node.js)
+
+### Planned Improvement
+
+A future release will replace native database dependencies with a portable, zero-native-build
+solution (such as `sql.js` or another WebAssembly-based driver) to provide full compatibility
+with Android Termux while maintaining support for desktop and server environments.
+
+### Status
+
+| Platform | Status |
+|---|---|
+| Linux | ✅ Supported |
+| macOS | ✅ Supported |
+| Windows | ✅ Supported |
+| Android Termux | ⚠️ Limited (native dependency issue) |
+
+> **Note:** This limitation only affects local development on Android Termux. Deployments on
+> standard Linux servers, VPSs, containers, and cloud environments are the primary supported
+> targets for the current release.
+
+<br/>
+
+## 06 · Installation
+
+```bash
+$ git clone https://github.com/SHalimoosavi/SYJ-Nexus-Engine.git
+$ cd SYJ-Nexus-Engine
+$ chmod +x init.sh
+$ ./init.sh
+```
+
+```
+[init] Checking Node.js...
+[ok]   Node.js v20.11.0 detected
+[init] Checking npm...
+[ok]   npm 10.2.4 detected
+[init] Installing dependencies...
+[ok]   Dependencies installed
+[init] Checking environment configuration...
+[ok]   .env created with freshly generated secrets
+[init] Applying migrations...
+[ok]   Migrations applied
+[init] Seeding baseline data...
+[ok]   Baseline data seeded
+[init] Verifying installation...
+[ok]   Health check passed
+
+==================================================
+   SYJ Nexus Engine is ready.
+==================================================
+```
+
+`init.sh` is fully idempotent — safe to re-run at any time.
+
+<br/>
+
+## 07 · Initialization
 
 ```bash
 npm install            # install dependencies
@@ -159,78 +257,67 @@ npm run db:seed        # seed default org / admin user / sample data
 npm run health          # verify DB + registry are readable
 ```
 
-The seeded admin credentials are printed at the end of `db:seed` and are controlled by
-`SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` in `.env`. **Change the password after first login
-in any real deployment.**
+Seeded admin credentials come from `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` in `.env` and are
+printed at the end of `db:seed`. **Change the password after first login.**
 
-## Development
+<br/>
+
+## 08 · Development
 
 ```bash
-npm run dev
+$ npm run dev
+   ▲ Next.js 14.2.15
+   - Local:  http://localhost:3000
+   - API:    http://localhost:3000/api
+
+ ✓ Ready in 890ms
 ```
-
-Visit `http://localhost:3000` for the status dashboard, or call the API directly at
-`http://localhost:3000/api/...`.
-
-Other useful scripts:
 
 ```bash
 npm run lint        # ESLint
 npm run typecheck   # tsc --noEmit, strict mode
 npm run test        # Vitest suite (one-shot)
 npm run test:watch  # Vitest in watch mode
-npm run clean       # remove .next/ build cache and stray journal files
+npm run clean       # remove .next/ build cache
 ```
 
-## Production Deployment
+<br/>
+
+## 09 · Production Deployment
 
 ```bash
-npm run build
-npm run start
+$ npm run build
+$ npm run start
 ```
 
-Set `NODE_ENV=production` in `.env`. Because the entire stack is Node + SQLite, this runs on
-any VPS, a Raspberry Pi, or — per the project's original design constraint — directly on an
-Android device via Termux, with no containerization required. If you do want to containerize
-it, that's a deployment choice, not a requirement of the framework.
+Because the stack is Node + SQLite, this runs on any VPS, a Raspberry Pi, or — outside of local
+development — on Android hardware via a properly configured Node runtime. Containerizing it is
+a deployment choice, never a requirement.
 
-For multi-instance/horizontally-scaled deployments, note two things that currently assume a
-single Node process: the in-memory rate limiter (`core/authz/rateLimit.ts`) and SQLite itself
-(fine for one writer process; for concurrent writers across instances, put a proxy in front or
-migrate the Drizzle dialect to a networked database — the schema and query layer are already
-abstracted behind `db/client.ts` to make that swap contained to one file).
+> **Scaling note:** the in-memory rate limiter and SQLite itself assume a single Node process.
+> For multi-instance deployments, put a shared store behind `core/authz/rateLimit.ts`, and note
+> that `db/client.ts` is the *only* file that imports `better-sqlite3` directly — swapping the
+> dialect for a networked database later is a contained, single-file change.
 
-## Database
+<br/>
 
-All tables are defined in `db/schema.ts` using Drizzle's SQLite dialect: `organizations`,
-`users`, `roles`, `permissions`, `role_permissions`, `user_roles`, `sessions`, `leads`,
-`compliance_logs`, `transactions`, `activities`, `attachments`, `settings`, `api_keys`,
-`audit_logs`. Foreign keys are enforced (`PRAGMA foreign_keys = ON`) and WAL mode is enabled
-for better concurrent read performance.
+## 10 · Configuration
 
-To change the schema: edit `db/schema.ts`, then run `npm run db:generate` to produce a new SQL
-migration, and `npm run db:migrate` to apply it.
+All deployment config lives in `.env` (see `.env.example`, fully documented inline — never
+commit a real `.env`). Per-organization *runtime* settings (feature flags, display prefs,
+per-tenant toggles) go through the `/api/settings` key-value store instead — that's the
+**Configuration Manager**, meant for things that change without a redeploy.
 
-## Configuration
+<br/>
 
-All runtime configuration is environment-based — see `.env.example` for the full list with
-inline documentation. Never commit a real `.env` file (it's already git-ignored).
-
-Per-organization application settings (as opposed to deployment/environment config) are
-managed through the `/api/settings` key-value store, not environment variables — that's the
-**Configuration Manager** module, and it's meant for things that change at runtime without a
-redeploy (feature flags, display preferences, per-tenant toggles, etc).
-
-## Vertical Registry (BYOV)
-
-This is the core mechanism of the whole framework. Open `registry/vertical-registry.json`:
+## 11 · Vertical Registry (BYOV)
 
 ```json
+// registry/vertical-registry.json
 {
   "id": "retail",
   "name": "Retail",
   "description": "Storefront operations, customer leads, and inventory-linked transactions.",
-  "icon": "shopping-bag",
   "enabled": true,
   "leadStages": ["inquiry", "cart", "checkout", "won", "lost"],
   "complianceTypes": ["trade_license", "tax_registration"],
@@ -238,156 +325,127 @@ This is the core mechanism of the whole framework. Open `registry/vertical-regis
 }
 ```
 
-To add a new vertical, append a new object to the `verticals` array — no code change required.
-The registry drives:
+Append an object → the vertical appears in `GET /api/verticals`, becomes a valid `verticalId`
+on every lead/compliance/transaction create call, and its permissions become assignable to
+roles. **No code change. No redeploy logic. No migration.**
 
-- `GET /api/verticals` (what the dashboard/nav shows)
-- Validation of `verticalId` on every lead/compliance/transaction create call
-- The set of permission strings available to assign to roles
+13 verticals ship pre-configured: `agriculture` `manufacturing` `logistics` `retail`
+`healthcare` `education` `hospitality` `construction` `finance` `government` `real_estate`
+`saas` `consulting` — delete, disable (`"enabled": false`), or replace freely.
 
-13 verticals ship pre-configured out of the box (agriculture, manufacturing, logistics,
-retail, healthcare, education, hospitality, construction, finance, government, real_estate,
-saas, consulting) as working examples — delete, disable (`"enabled": false`), or replace them
-freely.
+<br/>
 
-## API Documentation
+## 12 · API Documentation
 
-All responses share one envelope:
+Every response shares one envelope:
 
-```json
-{ "success": true, "data": { ... }, "meta": { ... } }
-{ "success": false, "error": { "code": "VALIDATION_ERROR", "message": "...", "details": [...] } }
+```jsonc
+{ "success": true,  "data": { /* ... */ }, "meta": { /* optional */ } }
+{ "success": false, "error": { "code": "VALIDATION_ERROR", "message": "...", "details": [] } }
 ```
 
-Mutating requests (`POST`/`PATCH`/`PUT`/`DELETE`) require the `x-csrf-token` header, using the
-`csrfToken` value returned by `/api/auth/login` or `/api/auth/session`.
+Mutating requests require the `x-csrf-token` header (from `/api/auth/login` or `/session`).
 
 | Route | Methods | Auth | Purpose |
 |---|---|---|---|
-| `/api/organizations/register` | POST | public | Bootstrap a new tenant + first admin |
-| `/api/auth/login` | POST | public | Authenticate, receive session cookie + CSRF token |
-| `/api/auth/logout` | POST | session | Revoke the current session |
-| `/api/auth/session` | GET | public | Check current auth state |
-| `/api/users` | GET, POST | session | List / create users |
-| `/api/users/{id}` | GET, PATCH | session | View / update a user, assign roles |
-| `/api/organizations/{id}` | GET, PATCH | session | View / update the tenant |
-| `/api/verticals` | GET | session | List enabled verticals from the registry |
-| `/api/leads` | GET, POST | session | Unified operational layer — leads |
-| `/api/leads/{id}` | GET, PATCH | session | Single lead |
-| `/api/compliance` | GET, POST | session | Unified operational layer — compliance logs |
-| `/api/compliance/{id}` | GET, PATCH | session | Single compliance log |
-| `/api/transactions` | GET, POST | session | Unified operational layer — transactions |
-| `/api/transactions/{id}` | GET, PATCH | session | Single transaction |
-| `/api/activity` | GET | session | Org-wide activity feed |
-| `/api/activity/{entityType}/{entityId}` | GET | session | Timeline for one record |
-| `/api/search` | GET | session | Global search across leads/transactions/compliance/users |
-| `/api/settings` | GET, PUT | session | Configuration manager (key/value) |
-| `/api/settings/api-keys` | GET, POST | session | Issue/list API keys for agent access |
-| `/api/system` | GET | session | Version, verticals, per-org record counts |
-| `/api/system/audit` | GET | session | Read the audit trail |
-| `/api/health` | GET | public | Liveness/readiness probe |
+| `/api/organizations/register` | `POST` | public | Bootstrap a new tenant + first admin |
+| `/api/auth/login` | `POST` | public | Authenticate → session cookie + CSRF token |
+| `/api/auth/logout` | `POST` | session | Revoke current session |
+| `/api/auth/session` | `GET` | public | Check current auth state |
+| `/api/users` `/api/users/{id}` | `GET POST PATCH` | session | Manage users + roles |
+| `/api/organizations/{id}` | `GET PATCH` | session | View / update tenant |
+| `/api/verticals` | `GET` | session | Registry-driven vertical list |
+| `/api/leads` `/api/leads/{id}` | `GET POST PATCH` | session | Unified data layer — leads |
+| `/api/compliance` `/api/compliance/{id}` | `GET POST PATCH` | session | Compliance logs |
+| `/api/transactions` `/api/transactions/{id}` | `GET POST PATCH` | session | Transactions |
+| `/api/activity` | `GET` | session | Org-wide activity feed |
+| `/api/activity/{entityType}/{entityId}` | `GET` | session | Per-record timeline |
+| `/api/search` | `GET` | session | Global search |
+| `/api/settings` `/api/settings/api-keys` | `GET PUT POST` | session | Config + API keys |
+| `/api/system` `/api/system/audit` | `GET` | session | Status snapshot + audit read |
+| `/api/health` | `GET` | public | Liveness/readiness probe |
 
-Every list endpoint accepts `page`, `pageSize` (max 100), and `verticalId` query params.
+> **Built for AI-agent access.** No LLM-specific code — just clean, typed CRUD + search +
+> timeline semantics that any autonomous agent can call over plain HTTP.
 
-### Designed for AI-agent access
+<br/>
 
-The operational endpoints (`leads`, `compliance`, `transactions`, `activity`, `search`) expose
-plain CRUD + search + timeline semantics with typed, validated JSON in and out — no
-LLM-specific code is baked into the framework itself, but the interface is deliberately clean
-enough that an autonomous agent (or a Claude-based tool, or anything else) can read, create,
-update, search, and reconstruct history without needing bespoke integration work.
+## 13 · Security Model
 
-## Security Model
-
-- **Passwords**: hashed with Node's built-in `crypto.scrypt` (memory-hard KDF), random 16-byte
-  salt per password, constant-time comparison on verify. No plaintext ever touches disk or logs.
-- **Sessions**: server-side session rows in SQLite; the cookie is an HMAC-signed session ID
-  (`SESSION_SECRET`), `httpOnly`, `sameSite=lax`, and `secure` in production.
-- **CSRF**: double-submit token issued at login, required via `x-csrf-token` header on every
-  mutating request; compared with `crypto.timingSafeEqual`.
-- **RBAC**: users → roles → permissions, resolved centrally in `core/authz/rbac.ts`. Every
-  protected route declares the single permission it requires; `org:admin` is a superuser bit.
-- **Rate limiting**: sliding-window limiter per client IP (`core/authz/rateLimit.ts`), applied
-  to every guarded route and to login specifically.
-- **Audit trail**: `core/logging/audit.ts` writes a durable row to `audit_logs` for every
-  security-relevant action (login, logout, record creation/update, settings changes, API key
-  issuance) in addition to the structured console audit log line.
-- **Safe error responses**: unexpected errors are logged server-side with full detail but the
-  client only ever receives a generic `INTERNAL_ERROR` — no stack traces, no SQL, no internals.
-- **Secure headers**: `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, restrictive
-  `Permissions-Policy` set globally in `next.config.js`.
-- **API keys**: shown once at creation; only a SHA-256 hash and a display prefix are persisted.
-
-## Testing
-
-```bash
-npm run test
+```
+┌─ Passwords ───── crypto.scrypt · random salt · timing-safe compare · zero native addons
+├─ Sessions ─────── server-side rows · HMAC-signed cookie · httpOnly · sameSite=lax
+├─ CSRF ──────────── double-submit token · required on every mutating request
+├─ RBAC ──────────── users → roles → permissions, resolved in one module
+├─ Rate limiting ─── sliding window, per client IP
+├─ Audit trail ────── durable row per security-relevant action
+├─ Error responses ── generic to the client, full detail server-side only
+└─ Secure headers ─── X-Frame-Options · Permissions-Policy · Referrer-Policy
 ```
 
-The suite covers: registry loading/validation, password hashing (including timing-safe
-verification and malformed-hash handling), Zod validation schemas, the unified operational
-data layer (lead creation, org-scoping, automatic activity/timeline recording), and the API
-error/response envelope.
+<br/>
 
-## License
+## 14 · Testing
+
+```bash
+$ npm run test
+
+ ✓ tests/registry/loader.test.ts       (7 tests)
+ ✓ tests/core/password.test.ts         (9 tests)
+ ✓ tests/core/validation.test.ts       (9 tests)
+ ✓ tests/db/operational.test.ts        (3 tests)
+ ✓ tests/api/handler.test.ts           (9 tests)
+
+ Test Files  5 passed (5)
+      Tests  37 passed (37)
+```
+
+<br/>
+
+## 15 · License
 
 MIT — see [`LICENSE`](./LICENSE). Copyright © 2026 SAYANJALI NEXUS PRIVATE LIMITED.
 
-## Contributing
+<br/>
 
-1. Fork the repository and create a feature branch.
-2. Keep changes scoped: one concern per pull request.
-3. Run `npm run lint && npm run typecheck && npm run test` before opening a PR.
-4. If you add a table, include the corresponding migration (`npm run db:generate`).
-5. If you add a vertical-facing feature, prefer extending `registry/vertical-registry.json`
-   over hardcoding vertical logic in `core/` or `app/api/`.
-6. Describe what changed and why in the PR description — no unexplained diffs.
+## 16 · Contributing
 
-## Troubleshooting
+1. Fork → feature branch → one concern per PR.
+2. `npm run lint && npm run typecheck && npm run test` before opening it.
+3. New table → include the migration (`npm run db:generate`).
+4. Vertical-facing feature → extend `vertical-registry.json` before touching `core/`.
 
-**`init.sh: command not found` or "permission denied"**
-Run `chmod +x init.sh` before `./init.sh`.
+<br/>
 
-**`Error: SESSION_SECRET is not configured`**
-Your `.env` is missing or the `SESSION_SECRET` line got cleared. Re-run `./init.sh`, or copy
-`.env.example` to `.env` and set `SESSION_SECRET` / `CSRF_SECRET` manually (each should be a
-64-character hex string, e.g. from `openssl rand -hex 32`).
+## 17 · Troubleshooting
 
-**`better-sqlite3` fails to build/install**
-This means a native binary wasn't available for your platform/Node version and it's compiling
-from source, which requires build tools (Python, a C++ compiler, `make`). On Debian/Ubuntu:
-`sudo apt install -y build-essential python3`. On Termux: `pkg install build-essential python`.
+| Symptom | Fix |
+|---|---|
+| `init.sh: permission denied` | `chmod +x init.sh` |
+| `SESSION_SECRET is not configured` | Re-run `./init.sh`, or set it manually in `.env` (64-hex chars) |
+| `better-sqlite3` fails to build | See [§05 Termux Notice](#05--️-termux-compatibility-notice) — install build tools or switch platform |
+| `db:migrate` does nothing | Run `npm run db:generate` first |
+| 401 on every call | Register → login → send `csrfToken` as `x-csrf-token` on mutations |
 
-**Migrations folder is empty / `db:migrate` does nothing**
-Run `npm run db:generate` first — it reads `db/schema.ts` and writes SQL into
-`db/migrations/`, which `db:migrate` then applies.
+<br/>
 
-**401 on every API call from a fresh client**
-You need an active session. Call `POST /api/organizations/register` once to bootstrap a tenant
-and admin user, then `POST /api/auth/login`, and use the returned `csrfToken` in the
-`x-csrf-token` header on subsequent mutating requests.
-
-## FAQ
+## 18 · FAQ
 
 **Can I add a vertical without redeploying?**
-Editing `vertical-registry.json` and restarting the process is all that's required — there's
-no code to touch. On a platform that hot-reloads env/config, you could call
-`invalidateRegistryCache()` and reload without even a restart, though that's not wired up to a
-route by default (add one if your deployment needs it).
+Edit `vertical-registry.json`, restart the process. No code to touch.
 
 **Why SQLite instead of Postgres/MySQL?**
-The design goal was zero external services and minimal setup — the same reason Prisma/Mongo/
-Firebase/Supabase were explicitly excluded. SQLite with WAL mode comfortably handles a single
-Node process serving many readers and one writer. The Drizzle schema and `db/client.ts` are
-the only places that know it's SQLite, so migrating to a networked database later is a
-contained change, not a rewrite.
+Zero external services was a hard constraint. `db/client.ts` is the only file that knows it's
+SQLite — swapping dialects later is contained, not a rewrite.
 
-**Does this include a frontend for every module?**
-The shipped UI is a minimal status dashboard (`app/page.tsx`) showing the loaded registry and
-links into the API. The framework is intentionally headless/API-first; building out a full
-admin UI on top of these endpoints is the natural next step and is left open rather than
-opinionated for you.
+**Does this ship a full admin UI?**
+No — the UI is a minimal status dashboard. The framework is intentionally headless/API-first.
 
 **Is there LLM-specific code anywhere?**
-No. The operational API is simply clean, typed, and predictable enough that any AI agent (or
-any other client) can use it via ordinary HTTP + JSON.
+No. The operational API is just clean, typed, predictable HTTP + JSON.
+
+<br/>
+
+<div align="center">
+<sub>SYJ NEXUS ENGINE · SAYANJALI NEXUS PRIVATE LIMITED · MIT LICENSED</sub>
+</div>
