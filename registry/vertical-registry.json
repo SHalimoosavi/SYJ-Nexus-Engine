@@ -1,0 +1,134 @@
+{
+  "verticals": [
+    {
+      "id": "agriculture",
+      "name": "Agriculture",
+      "description": "Farm operations, crop cycles, supply compliance, and yield tracking.",
+      "icon": "sprout",
+      "enabled": true,
+      "leadStages": ["inquiry", "site_visit", "proposal", "won", "lost"],
+      "complianceTypes": ["land_use", "pesticide", "organic_certification"],
+      "permissions": ["agriculture:read", "agriculture:write", "agriculture:admin"]
+    },
+    {
+      "id": "manufacturing",
+      "name": "Manufacturing",
+      "description": "Production lines, quality compliance, vendor and order tracking.",
+      "icon": "factory",
+      "enabled": true,
+      "leadStages": ["inquiry", "quotation", "purchase_order", "won", "lost"],
+      "complianceTypes": ["iso_9001", "safety_audit", "environmental"],
+      "permissions": ["manufacturing:read", "manufacturing:write", "manufacturing:admin"]
+    },
+    {
+      "id": "logistics",
+      "name": "Logistics",
+      "description": "Fleet, shipment, and route compliance operations.",
+      "icon": "truck",
+      "enabled": true,
+      "leadStages": ["inquiry", "quote", "booking", "won", "lost"],
+      "complianceTypes": ["vehicle_permit", "driver_license", "customs"],
+      "permissions": ["logistics:read", "logistics:write", "logistics:admin"]
+    },
+    {
+      "id": "retail",
+      "name": "Retail",
+      "description": "Storefront operations, customer leads, and inventory-linked transactions.",
+      "icon": "shopping-bag",
+      "enabled": true,
+      "leadStages": ["inquiry", "cart", "checkout", "won", "lost"],
+      "complianceTypes": ["trade_license", "tax_registration"],
+      "permissions": ["retail:read", "retail:write", "retail:admin"]
+    },
+    {
+      "id": "healthcare",
+      "name": "Healthcare",
+      "description": "Patient intake, regulatory compliance, and care activity tracking.",
+      "icon": "heart-pulse",
+      "enabled": true,
+      "leadStages": ["referral", "assessment", "admission", "won", "lost"],
+      "complianceTypes": ["hipaa_equivalent", "medical_license", "facility_audit"],
+      "permissions": ["healthcare:read", "healthcare:write", "healthcare:admin"]
+    },
+    {
+      "id": "education",
+      "name": "Education",
+      "description": "Admissions pipeline, accreditation compliance, and student activity.",
+      "icon": "graduation-cap",
+      "enabled": true,
+      "leadStages": ["inquiry", "application", "interview", "won", "lost"],
+      "complianceTypes": ["accreditation", "safety_certification"],
+      "permissions": ["education:read", "education:write", "education:admin"]
+    },
+    {
+      "id": "hospitality",
+      "name": "Hospitality",
+      "description": "Bookings, guest activity, and licensing compliance.",
+      "icon": "concierge-bell",
+      "enabled": true,
+      "leadStages": ["inquiry", "reservation", "check_in", "won", "lost"],
+      "complianceTypes": ["hospitality_license", "fire_safety", "food_safety"],
+      "permissions": ["hospitality:read", "hospitality:write", "hospitality:admin"]
+    },
+    {
+      "id": "construction",
+      "name": "Construction",
+      "description": "Project bids, site compliance, and contractor transactions.",
+      "icon": "hard-hat",
+      "enabled": true,
+      "leadStages": ["inquiry", "site_survey", "bid", "won", "lost"],
+      "complianceTypes": ["building_permit", "safety_audit", "environmental"],
+      "permissions": ["construction:read", "construction:write", "construction:admin"]
+    },
+    {
+      "id": "finance",
+      "name": "Finance",
+      "description": "Client onboarding, regulatory compliance, and transaction ledgers.",
+      "icon": "landmark",
+      "enabled": true,
+      "leadStages": ["inquiry", "kyc", "underwriting", "won", "lost"],
+      "complianceTypes": ["kyc_aml", "regulatory_filing", "audit"],
+      "permissions": ["finance:read", "finance:write", "finance:admin"]
+    },
+    {
+      "id": "government",
+      "name": "Government",
+      "description": "Citizen service requests, regulatory compliance, and audit trails.",
+      "icon": "building-columns",
+      "enabled": true,
+      "leadStages": ["request", "review", "approval", "won", "lost"],
+      "complianceTypes": ["public_records", "procurement", "audit"],
+      "permissions": ["government:read", "government:write", "government:admin"]
+    },
+    {
+      "id": "real_estate",
+      "name": "Real Estate",
+      "description": "Property leads, title compliance, and transaction pipelines.",
+      "icon": "home",
+      "enabled": true,
+      "leadStages": ["inquiry", "viewing", "offer", "won", "lost"],
+      "complianceTypes": ["title_verification", "zoning", "rera_equivalent"],
+      "permissions": ["real_estate:read", "real_estate:write", "real_estate:admin"]
+    },
+    {
+      "id": "saas",
+      "name": "SaaS",
+      "description": "Trial-to-paid pipelines, SLA compliance, and subscription transactions.",
+      "icon": "cloud",
+      "enabled": true,
+      "leadStages": ["trial", "demo", "negotiation", "won", "lost"],
+      "complianceTypes": ["sla", "data_processing_agreement"],
+      "permissions": ["saas:read", "saas:write", "saas:admin"]
+    },
+    {
+      "id": "consulting",
+      "name": "Consulting",
+      "description": "Engagement pipelines, statement-of-work compliance, and billing activity.",
+      "icon": "briefcase",
+      "enabled": true,
+      "leadStages": ["inquiry", "proposal", "sow_signed", "won", "lost"],
+      "complianceTypes": ["msa", "nda", "engagement_audit"],
+      "permissions": ["consulting:read", "consulting:write", "consulting:admin"]
+    }
+  ]
+}
